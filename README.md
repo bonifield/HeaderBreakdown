@@ -6,6 +6,10 @@ flattens a collection of HTTP headers into a JSON structure for automated analys
 pip install headerbreakdown
 ```
 
+### Example Output
+![headerbreakdown-summary-output.PNG](https://github.com/bonifield/HeaderBreakdown/raw/main/images/headerbreakdown-summary-output.PNG)
+- this is the summary; each of these items are accessible directly as attributes; see below
+
 ### Example Usage
 ```
 from headerbreakdown import HeaderBreakdown
