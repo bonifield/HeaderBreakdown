@@ -73,25 +73,26 @@ class HeaderBreakdown:
 		for i in h:
 			if "HTTP/" in i:
 				x = i.split()
-				if "HTTP/" in x[0]:
-					self.direction = "response"
-					self.http_version = x[0]
-					self.response_code = x[1]
-					x[2] = " ".join(x[2:]).strip()
-					self.response_phrase = x[2]
-					d["direction"] = "response"
-					d["http_version"] = x[0]
-					d["response_code"] = x[1]
-					d["response_phrase"] = x[2]
-				elif "HTTP/" in x[2]:
-					self.direction = "request"
-					self.method = x[0]
-					self.path = x[1]
-					self.http_version = x[2]
-					d["direction"] = "request"
-					d["method"] = x[0]
-					d["path"] = x[1]
-					d["http_version"] = x[2]
+				if len(x) == 3:
+					if "HTTP/" in x[0]:
+						self.direction = "response"
+						self.http_version = x[0]
+						self.response_code = x[1]
+						x[2] = " ".join(x[2:]).strip()
+						self.response_phrase = x[2]
+						d["direction"] = "response"
+						d["http_version"] = x[0]
+						d["response_code"] = x[1]
+						d["response_phrase"] = x[2]
+					elif "HTTP/" in x[2]:
+						self.direction = "request"
+						self.method = x[0]
+						self.path = x[1]
+						self.http_version = x[2]
+						d["direction"] = "request"
+						d["method"] = x[0]
+						d["path"] = x[1]
+						d["http_version"] = x[2]
 			elif ":" in i:
 				x = i.split(":")
 				x[1] = ":".join(x[1:]).strip()

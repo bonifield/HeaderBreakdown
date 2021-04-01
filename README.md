@@ -58,6 +58,8 @@ print(h.summary)
 ```
 
 ### Releases and Updates
+- 2021-04-01
+	- minor fix for HTTP/ detection
 - 2021-03-23
 	- minor edits, added summary and nested_output/nested_json attributes
 - 2021-03-13
