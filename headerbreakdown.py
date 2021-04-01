@@ -93,7 +93,7 @@ class HeaderBreakdown:
 						d["method"] = x[0]
 						d["path"] = x[1]
 						d["http_version"] = x[2]
-			elif ":" in i:
+			if ":" in i:
 				x = i.split(":")
 				x[1] = ":".join(x[1:]).strip()
 				x = [x[0], x[1]]
