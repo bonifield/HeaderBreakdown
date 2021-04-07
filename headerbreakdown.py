@@ -17,6 +17,8 @@ class HeaderBreakdown:
 		self.json = None
 		self.nested_output = None
 		self.nested_json = None
+		self.nested_direction_output = None
+		self.nested_direction_json = None
 		self.notices = []
 		# have class methods run when the object is initialized
 		self.process()
@@ -236,6 +238,10 @@ class HeaderBreakdown:
 		# *_nested just places the returned dictionary as self-contained value for top-level key "headers"
 		self.nested_output = {'headers':h}
 		self.nested_json = json.dumps(self.nested_output)
+		# *_nested_direction places the returned dictionary further down under headers --> request or response key
+		if self.direction is not None:
+			self.nested_direction_output = {'headers':{str(self.direction):h}}
+			self.nested_direction_json = json.dumps(self.nested_direction_output)
 		#
 		#
 		#

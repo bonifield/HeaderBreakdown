@@ -14,38 +14,33 @@ pip install headerbreakdown
 ```
 from headerbreakdown import HeaderBreakdown
 import json
-
-#
-# SAMPLE HEADERS
-#
-# header with multiple Host and User-Agent values
+# sample header with multiple Host and User-Agent values
 H1 = "GET /?gws_rd=ssl HTTP/1.1\r\nHost: www.google.com\r\nHost: www.bing.com\r\nHost: www.yahoo.com\r\nConnection: keep-alive\r\nAccept-Encoding: gzip, deflate\r\nAccept: */*\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/99.0\r\nCookie: 1P_JAR=2021-03-13-04"
-# single header as a plain string (with no \r\n)
-H2 = "Set-Cookie: k1=v1;k2=v2"
-# normal header examples that terminate with \r\n\r\n
-H3 = "HTTP/1.1 302 Found\r\nLocation: https://www.google.com/?gws_rd=ssl\r\nCache-Control: private\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 13 Mar 2021 04:15:44 GMT\r\nServer: gws\r\nContent-Length: 231\r\nX-XSS-Protection: 0\r\nX-Frame-Options: SAMEORIGIN\r\nSet-Cookie: 1P_JAR=2021-03-13-04; expires=Mon, 12-Apr-2021 04:15:44 GMT; path=/; domain=.google.com; Secure; SameSite=none\r\n\r\n"
-H4 = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nSet-Cookie: k1=v1;k2=v2\r\n\r\n"
-H5 = "GET / HTTP/1.1\r\nHost: google.com\r\nUser-Agent: BLAHBLAH\r\nAccept: text/plain\r\n\r\n"
-
-#
-# USAGE
-#
+# create the object
 h = HeaderBreakdown(H1)
+# utilize attributes
 print(h.output) # dictionary
 print(h.json) # string
 print(h.summary)
 # etc
 ```
+
 ### Available Attributes (all except summary included in output and json)
 ```
+# main attributes (also listed below)
+	output (dictionary)
+	json (string)
+	nested_*
 # dictionaries
 	output
-	nested_output
+	nested_output # all objects nested under 'headers', ex. {'headers':{...}}
+	nested_direction_output # all objects nested under "headers"+direction, ex. {'headers':{'request':{...}}}
 # lists
 	notices
 # strings
 	json
-	nested_json
+	nested_json # all objects nested under "headers", ex. {"headers":{...}}
+	nested_direction_json # all objects nested under "headers"+direction, ex. {"headers":{"request":{...}}}
 	direction
 	http_version
 	method
@@ -58,9 +53,13 @@ print(h.summary)
 ```
 
 ### Releases and Updates
+- 2021-04-06
+	- added nested_direction_json/output, ex. {"headers":{"request":{...}}}
+	- so direction gets captured and headers do not get overwritten if processing a capture with both sides of the communication
+	- the nested_direction_* attributes will be type None when processing a single, direction-ambiguous header (ex. "Set-Cookie: k1=v1;k2=v2")
 - 2021-04-01
 	- minor fix for HTTP/ detection
 - 2021-03-23
-	- minor edits, added summary and nested_output/nested_json attributes
+	- minor edits, added summary and nested_output/nested_json attributes, ex. {"headers":{...}}
 - 2021-03-13
 	- first release
